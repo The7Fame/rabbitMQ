@@ -1,0 +1,32 @@
+version: '3.7'
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:latest
+    environment:
+      - "RABBITMQ_DEFAULT_PASS=secret"
+      - "RABBITMQ_DEFAULT_USER=myuser"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  producer:
+    container_name: producer
+    build:
+      context: producer
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - rabbitmq
+
+  consumer:
+    container_name: consumer
+    build:
+      context: consumer
+      dockerfile: Dockerfile
+    ports:
+      - "9000:9000"
+    depends_on:
+      - producer
+      - rabbitmq
