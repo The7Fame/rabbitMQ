@@ -1,0 +1,6 @@
+server:
+  port: 9000
+rabbitmq:
+  password: secret
+  username: myuser
+  host: rabbitmq
